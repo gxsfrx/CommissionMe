@@ -81,13 +81,11 @@ export default function CommissionsScreen({ navigation }) {
           text: "Deliver & Complete",
           onPress: async () => {
             try {
-              // 1. Mark order as completed
               await updateDoc(doc(db, "orders", item.id), {
                 status: "completed",
                 completedAt: serverTimestamp(),
               });
 
-              // 2. Notify client
               await addDoc(collection(db, "notifications"), {
                 recipientId: item.clientId,
                 title: "Artwork Delivered! 🎨",
