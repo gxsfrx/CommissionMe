@@ -14,7 +14,7 @@ import {
 import { auth, db } from "../firebaseConfig";
 
 export default function SignInScreen({ navigation }) {
-  const [identifier, setIdentifier] = useState(""); // Can be email or username
+  const [identifier, setIdentifier] = useState(""); 
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -31,7 +31,6 @@ export default function SignInScreen({ navigation }) {
     try {
       let targetEmail = cleanIdentifier;
 
-      // If user entered a username instead of an email, look up email in Firestore
       if (!cleanIdentifier.includes("@")) {
         const usersRef = collection(db, "users");
         const q = query(usersRef, where("username", "==", cleanIdentifier));
@@ -47,7 +46,6 @@ export default function SignInScreen({ navigation }) {
         targetEmail = userData.email;
       }
 
-      // 1. Authenticate with Firebase using resolved email
       const userCredential = await signInWithEmailAndPassword(
         auth,
         targetEmail,
@@ -55,7 +53,6 @@ export default function SignInScreen({ navigation }) {
       );
       const user = userCredential.user;
 
-      // 2. Check if email is verified
       if (!user.emailVerified) {
         Alert.alert(
           "Email Not Verified",
@@ -68,7 +65,6 @@ export default function SignInScreen({ navigation }) {
         return;
       }
 
-      // 3. Navigate to MainTabs if verified
       navigation.navigate("MainTabs");
     } catch (error) {
       Alert.alert("Sign In Failed", error.message);
