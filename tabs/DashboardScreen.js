@@ -30,14 +30,12 @@ export default function DashboardScreen({ navigation }) {
   const [agreed, setAgreed] = useState(false);
   const [upgrading, setUpgrading] = useState(false);
 
-  // Dynamic Dashboard Stats
   const [totalEarnings, setTotalEarnings] = useState(0.0);
   const [activeCount, setActiveCount] = useState(0);
   const [completedCount, setCompletedCount] = useState(0);
 
   const currentUser = auth.currentUser;
 
-  // 1. Fetch user role
   useEffect(() => {
     if (!currentUser) {
       setLoading(false);
@@ -62,7 +60,6 @@ export default function DashboardScreen({ navigation }) {
     return () => unsubscribe();
   }, [currentUser]);
 
-  // 2. Real-time stats listener for orders
   useEffect(() => {
     if (!currentUser || role !== "ARTIST") return;
 
@@ -131,7 +128,6 @@ export default function DashboardScreen({ navigation }) {
     );
   }
 
-  // --- RESTRICTED VIEW FOR CLIENTS ---
   if (role !== "ARTIST") {
     return (
       <SafeAreaView style={styles.safeArea}>
@@ -248,7 +244,6 @@ export default function DashboardScreen({ navigation }) {
     );
   }
 
-  // --- FULL ARTIST DASHBOARD VIEW ---
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView
@@ -499,7 +494,6 @@ const styles = StyleSheet.create({
   confirmDisabled: { backgroundColor: "#CBD5E1" },
   modalConfirmText: { color: "#FFF", fontWeight: "700", fontSize: 14 },
 
-  // Active Dashboard
   dashboardContent: {
     paddingHorizontal: 20,
     paddingTop: 16,
