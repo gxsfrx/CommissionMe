@@ -63,13 +63,11 @@ export default function OrdersScreen({ navigation }) {
   // Handle Accept Order
   const handleAcceptOrder = async (order) => {
     try {
-      // 1. Update order status to accepted
       await updateDoc(doc(db, "orders", order.id), {
         status: "accepted",
         updatedAt: serverTimestamp(),
       });
 
-      // 2. Send notification to client with updated text
       await addDoc(collection(db, "notifications"), {
         recipientId: order.clientId,
         title: "Order Accepted! 🎉",
@@ -88,7 +86,6 @@ export default function OrdersScreen({ navigation }) {
     }
   };
 
-  // Handle Decline Order
   const handleDeclineOrder = async (order) => {
     Alert.alert(
       "Decline Request",
@@ -100,13 +97,11 @@ export default function OrdersScreen({ navigation }) {
           style: "destructive",
           onPress: async () => {
             try {
-              // 1. Update status to declined
               await updateDoc(doc(db, "orders", order.id), {
                 status: "declined",
                 updatedAt: serverTimestamp(),
               });
 
-              // 2. Send notification to client with read: false
               await addDoc(collection(db, "notifications"), {
                 recipientId: order.clientId,
                 title: "Order Declined",
