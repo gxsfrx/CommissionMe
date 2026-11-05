@@ -29,14 +29,12 @@ import {
 } from "react-native";
 import { auth, db } from "../firebaseConfig";
 
-// Base64 Cloudinary Upload Helper
 const uploadToCloudinary = async (base64Img) => {
   if (!base64Img) return null;
 
   const CLOUD_NAME = "zwrleblh";
   const UPLOAD_PRESET = "unsigned_preset";
 
-  // Create base64 Data URI
   const fileData = `data:image/jpeg;base64,${base64Img}`;
 
   const data = new FormData();
@@ -72,10 +70,8 @@ export default function ServicesScreen({ navigation }) {
   const [saving, setSaving] = useState(false);
   const [artistProfile, setArtistProfile] = useState(null);
 
-  // Modal / Viewing state for full image popup
   const [selectedServiceImage, setSelectedServiceImage] = useState(null);
 
-  // Form states
   const [packageName, setPackageName] = useState("");
   const [startingPrice, setStartingPrice] = useState("");
   const [description, setDescription] = useState("");
@@ -131,9 +127,9 @@ export default function ServicesScreen({ navigation }) {
 
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true, // Free-form crop enabled
+      allowsEditing: true, 
       quality: 0.7,
-      base64: true, // Enables base64 encoding for safe Cloudinary upload
+      base64: true, 
     });
 
     if (!result.canceled && result.assets && result.assets.length > 0) {
@@ -155,7 +151,6 @@ export default function ServicesScreen({ navigation }) {
     try {
       let cloudImageUrl = null;
 
-      // Upload base64 image if selected
       if (imageBase64) {
         cloudImageUrl = await uploadToCloudinary(imageBase64);
         if (!cloudImageUrl) {
@@ -363,7 +358,6 @@ export default function ServicesScreen({ navigation }) {
                   onChangeText={setDescription}
                 />
 
-                {/* Sample Art Image Upload Picker */}
                 <Text style={styles.inputLabel}>Sample Artwork Image</Text>
                 <TouchableOpacity
                   style={styles.imagePickerBox}
@@ -501,7 +495,6 @@ const styles = StyleSheet.create({
     marginBottom: 14,
     position: "relative",
   },
-  // Clean landscape cover preview banner for service cards
   pkgCoverImage: { width: "100%", height: 150, resizeMode: "cover" },
   zoomHintBadge: {
     position: "absolute",
@@ -620,7 +613,6 @@ const styles = StyleSheet.create({
   saveBtnText: { color: "#FFF", fontWeight: "700", fontSize: 16 },
   cancelTextBtn: { alignItems: "center", paddingVertical: 8 },
   cancelTextBtnLabel: { color: "#64748B", fontWeight: "700", fontSize: 15 },
-  // Full Image Modal Viewer Styles
   fullImageViewerOverlay: {
     flex: 1,
     backgroundColor: "rgba(0,0,0,0.9)",
