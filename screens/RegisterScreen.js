@@ -49,7 +49,6 @@ export default function RegisterScreen({ navigation }) {
 
     setLoading(true);
     try {
-      // 1. Check if username is already taken in Firestore
       const usersRef = collection(db, "users");
       const q = query(usersRef, where("username", "==", cleanUsername));
       const querySnapshot = await getDocs(q);
@@ -63,7 +62,6 @@ export default function RegisterScreen({ navigation }) {
         return;
       }
 
-      // 2. Create account in Firebase Auth
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         cleanEmail,
@@ -71,10 +69,8 @@ export default function RegisterScreen({ navigation }) {
       );
       const user = userCredential.user;
 
-      // 3. Send Firebase Email Verification
       await sendEmailVerification(user);
 
-      // 4. Save details to Firestore
       await setDoc(doc(db, "users", user.uid), {
         uid: user.uid,
         fullName: cleanFullName,
@@ -84,7 +80,6 @@ export default function RegisterScreen({ navigation }) {
         createdAt: new Date().toISOString(),
       });
 
-      // 5. Inform user and direct them to Sign In (or verification prompt)
       Alert.alert(
         "Verification Email Sent",
         "We've sent a verification link to your email address. Please check your inbox and verify your account before signing in.",
@@ -92,7 +87,6 @@ export default function RegisterScreen({ navigation }) {
           {
             text: "OK",
             onPress: () => {
-              // Sign out immediately so they have to verify first
               auth.signOut();
               navigation.navigate("SignIn");
             },
