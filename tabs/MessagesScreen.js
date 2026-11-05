@@ -265,7 +265,6 @@ export default function MessagesScreen({ route, navigation }) {
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
-        {/* Header */}
         <View style={styles.headerRow}>
           <TouchableOpacity
             style={styles.iconCircle}
