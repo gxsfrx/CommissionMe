@@ -18,7 +18,6 @@ import {
 } from "react-native";
 import { auth, db } from "../firebaseConfig";
 
-// Base64 Cloudinary Upload Helper
 const uploadToCloudinary = async (base64Img) => {
   if (!base64Img) return null;
 
@@ -59,7 +58,6 @@ export default function EditProfileScreen({ navigation }) {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
 
-  // Profile States
   const [bannerUri, setBannerUri] = useState(null);
   const [bannerBase64, setBannerBase64] = useState(null);
 
@@ -69,7 +67,6 @@ export default function EditProfileScreen({ navigation }) {
   const [username, setUsername] = useState("");
   const [bio, setBio] = useState("");
 
-  // Social Links States
   const [instagram, setInstagram] = useState("");
   const [twitter, setTwitter] = useState("");
   const [portfolio, setPortfolio] = useState("");
@@ -126,7 +123,7 @@ export default function EditProfileScreen({ navigation }) {
       allowsEditing: true,
       aspect,
       quality: 0.7,
-      base64: true, // Enabled base64 output
+      base64: true, 
     });
 
     if (!result.canceled && result.assets && result.assets.length > 0) {
@@ -153,7 +150,6 @@ export default function EditProfileScreen({ navigation }) {
       let finalBannerUrl = bannerUri;
       let finalAvatarUrl = avatarUri;
 
-      // 1. If user picked a new banner image, upload base64 to Cloudinary
       if (bannerBase64) {
         const uploadedBanner = await uploadToCloudinary(bannerBase64);
         if (uploadedBanner) {
@@ -163,7 +159,6 @@ export default function EditProfileScreen({ navigation }) {
         }
       }
 
-      // 2. If user picked a new avatar image, upload base64 to Cloudinary
       if (avatarBase64) {
         const uploadedAvatar = await uploadToCloudinary(avatarBase64);
         if (uploadedAvatar) {
@@ -173,7 +168,6 @@ export default function EditProfileScreen({ navigation }) {
         }
       }
 
-      // 3. Save permanent URLs and profile updates to Firestore
       const userRef = doc(db, "users", currentUser.uid);
       await updateDoc(userRef, {
         username: cleanUsername,
