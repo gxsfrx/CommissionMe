@@ -18,7 +18,6 @@ import {
 } from "react-native";
 import { auth, db } from "../firebaseConfig";
 
-// Base64 Cloudinary Upload Helper
 const uploadToCloudinary = async (base64Img) => {
   if (!base64Img) return null;
 
@@ -78,7 +77,6 @@ export default function PostScreen({ navigation }) {
       allowsEditing: true, // Enables cropper UI
       quality: 0.7,
       base64: true,
-      // aspect removed so cropping is free-form instead of locked to landscape
     });
 
     if (!result.canceled && result.assets && result.assets.length > 0) {
@@ -254,7 +252,7 @@ const styles = StyleSheet.create({
     borderColor: "#BAE6FD",
     borderStyle: "dashed",
     borderRadius: 16,
-    height: 240, // Increased preview box height for portrait artwork
+    height: 240, 
     alignItems: "center",
     justifyContent: "center",
     overflow: "hidden",
