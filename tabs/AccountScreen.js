@@ -39,7 +39,6 @@ export default function AccountScreen({ navigation }) {
   const [artworks, setArtworks] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Modal states
   const [selectedPost, setSelectedPost] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [editTitle, setEditTitle] = useState("");
@@ -54,7 +53,6 @@ export default function AccountScreen({ navigation }) {
       return;
     }
 
-    // 1. Real-time listener for current user's profile data (banner, avatar, bio, socials)
     const userDocRef = doc(db, "users", currentUser.uid);
     const unsubscribeUser = onSnapshot(userDocRef, (docSnap) => {
       if (docSnap.exists()) {
@@ -62,7 +60,6 @@ export default function AccountScreen({ navigation }) {
       }
     });
 
-    // 2. Real-time listener for logged-in user's posts
     const postsQuery = query(
       collection(db, "artworks"),
       where("userId", "==", currentUser.uid),
@@ -596,7 +593,6 @@ const styles = StyleSheet.create({
     padding: 8,
     elevation: 2,
   },
-  // Adjusted for a cleaner 3:4 portrait card ratio in the grid preview
   artImage: {
     width: "100%",
     height: 180,
@@ -632,7 +628,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  // Adjusted modal image style to use "contain" so full portrait or custom cropped artworks don't get awkwardly cropped out or stretched
   modalImage: {
     width: "100%",
     height: 320,
