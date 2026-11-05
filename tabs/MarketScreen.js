@@ -42,25 +42,20 @@ export default function MarketScreen({ navigation }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [bookmarks, setBookmarks] = useState([]);
 
-  // Cache for resolved artist details
   const [artistDetailsCache, setArtistDetailsCache] = useState({});
 
-  // Modal states
   const [selectedService, setSelectedService] = useState(null);
   const [isOrderModalVisible, setIsOrderModalVisible] = useState(false);
   const [briefText, setBriefText] = useState("");
   const [refImageUri, setRefImageUri] = useState(null);
   const [submittingOrder, setSubmittingOrder] = useState(false);
 
-  // Payment Selection State: "full" (100% Upfront) vs "half" (50% Deposit)
   const [paymentType, setPaymentType] = useState("full");
 
-  // Artist Profile Modal States
   const [viewArtist, setViewArtist] = useState(null);
   const [artistArtworks, setArtistArtworks] = useState([]);
   const [artistLoading, setArtistLoading] = useState(false);
 
-  // 1. Listen for user's bookmarks
   useEffect(() => {
     if (!currentUser) return;
     const userDocRef = doc(db, "users", currentUser.uid);
@@ -72,7 +67,6 @@ export default function MarketScreen({ navigation }) {
     return () => unsubscribe();
   }, [currentUser]);
 
-  // 2. Listen for marketplace services & live artist user profiles
   useEffect(() => {
     const servicesRef = collection(db, "services");
     const q = query(servicesRef, orderBy("createdAt", "desc"));
@@ -97,7 +91,6 @@ export default function MarketScreen({ navigation }) {
     return () => unsubscribeServices();
   }, []);
 
-  // Real-time listener for artists cache updates
   useEffect(() => {
     const usersRef = collection(db, "users");
     const unsubscribeUsers = onSnapshot(usersRef, (snapshot) => {
@@ -299,7 +292,6 @@ export default function MarketScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
-        {/* Header */}
         <View style={styles.headerRow}>
           <Text style={styles.logoText}>CommissionMe</Text>
           <TouchableOpacity
@@ -315,7 +307,6 @@ export default function MarketScreen({ navigation }) {
           contentContainerStyle={styles.scrollContent}
           showsVerticalScrollIndicator={false}
         >
-          {/* Hero */}
           <View style={styles.heroSection}>
             <Text style={styles.heroTitle}>
               Turn your ideas{"\n"}into real art
@@ -422,8 +413,6 @@ export default function MarketScreen({ navigation }) {
                           @{username}
                         </Text>
                       </TouchableOpacity>
-
-                      {/* Price on the left, Title next to it */}
                       <View style={styles.titlePriceInlineRow}>
                         <Text style={styles.priceTagInline}>${item.price}</Text>
                         <Text
@@ -447,7 +436,6 @@ export default function MarketScreen({ navigation }) {
           )}
         </ScrollView>
 
-        {/* SERVICE DETAIL MODAL */}
         {selectedService && (
           <Modal
             visible={true}
@@ -692,7 +680,6 @@ export default function MarketScreen({ navigation }) {
           </Modal>
         )}
 
-        {/* REQUEST ORDER BRIEF MODAL WITH PAYMENT OPTION SELECTOR */}
         <Modal
           visible={isOrderModalVisible}
           animationType="fade"
