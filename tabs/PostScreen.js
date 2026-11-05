@@ -108,7 +108,6 @@ export default function PostScreen({ navigation }) {
     setPublishing(true);
 
     try {
-      // 1. Upload base64 image to Cloudinary
       const uploadedCloudUrl = await uploadToCloudinary(imageBase64);
 
       if (!uploadedCloudUrl) {
@@ -120,7 +119,6 @@ export default function PostScreen({ navigation }) {
         return;
       }
 
-      // 2. Save document in Firestore with permanent cloud URL
       await addDoc(collection(db, "artworks"), {
         userId: user.uid,
         imageUri: uploadedCloudUrl,
