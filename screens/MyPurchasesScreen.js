@@ -57,7 +57,6 @@ export default function MyPurchasesScreen({ navigation }) {
     return () => unsubscribe();
   }, [currentUser]);
 
-  // Handle paying remaining 50% balance
   const handlePayBalance = async (item) => {
     Alert.alert(
       "Confirm Payment",
@@ -78,7 +77,6 @@ export default function MyPurchasesScreen({ navigation }) {
                 updatedAt: serverTimestamp(),
               });
 
-              // 2. Send notification to the artist
               await addDoc(collection(db, "notifications"), {
                 recipientId: item.artistId,
                 title: "Final Payment Received! 💳",
@@ -296,7 +294,6 @@ const styles = StyleSheet.create({
   pkgTitle: { fontSize: 16, fontWeight: "800", color: "#0A2540", marginTop: 2 },
   priceTag: { fontSize: 17, fontWeight: "900", color: "#16A34A" },
 
-  // Payment row styles
   paymentInfoRow: {
     flexDirection: "row",
     alignItems: "center",
@@ -333,7 +330,6 @@ const styles = StyleSheet.create({
   statusDeclined: { backgroundColor: "#FEE2E2" },
   statusText: { fontSize: 11, fontWeight: "800", color: "#1E293B" },
 
-  // Settle balance button styles
   payBalanceButton: {
     flexDirection: "row",
     alignItems: "center",
